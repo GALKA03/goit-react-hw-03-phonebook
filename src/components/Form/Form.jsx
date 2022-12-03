@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { FormStyled,InputStyle,Btn} from './Form.styled';
 import PropTypes from 'prop-types';
 class Form extends Component{
 state = {
@@ -29,7 +30,6 @@ hendleFormSubmit = e => {
     validateFormSubmit = () => {
         const { name, number } = this.state;
         const { addContacts} = this.props;
-        console.log('props',this.props)
         if (!name || !number) {
           alert('some file is empty')
             return false;
@@ -41,10 +41,10 @@ hendleFormSubmit = e => {
         const { name,number } = this.state;
       return (
           
-           <form onSubmit={this.hendleFormSubmit}>
+           <FormStyled onSubmit={this.hendleFormSubmit}>
         <label>
        Name
-                    <input
+                    <InputStyle
                      
                 value={name}
                 onChange={this.handleChangeForm}
@@ -57,7 +57,7 @@ hendleFormSubmit = e => {
             </label>
             <label >
               Number
-                    <input
+                    <InputStyle
                 value={number} 
             onChange = {this.handleChangeForm} 
   type="number"
@@ -67,8 +67,8 @@ hendleFormSubmit = e => {
   required
 />
             </label>
-        <button type="submit">Add to contact</button>
-          </form>
+        <Btn type="submit">Add to contact</Btn>
+          </FormStyled>
 )
 
     }

@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
+import {ContactsConteiner,Item,Btn } from './Contacts.style'
 const ContactsItem = ({ name, number, onRemove, id, children }) => {
    return( 
     
-           <li >
-               {name}:{number} <button onClick={()=> onRemove(id)}>Delete</button>
+           <Item >
+               {name}:{number} <Btn onClick={()=> onRemove(id)}>Delete</Btn>
       {children}
-       </li>
+       </Item>
 
     )
 }
@@ -17,10 +18,10 @@ export const Contacts = ({ contacts, onRemove }) => {
 
        //console.log(contacts)
     return( 
-    <ul>
+    <ContactsConteiner>
      {contacts.map((contact) => <ContactsItem {...contact}key={contact.id} onRemove={onRemove} />
      )}
-    </ul>
+    </ContactsConteiner>
     )
 }
 ContactsItem.prototype = {

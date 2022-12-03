@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { nanoid } from 'nanoid'
-
+import { Conteiner } from "./App.styles";
 import { Filter } from "./Filter/Filter";
 import Form from "./Form/Form";
 import { Contacts } from "./Contacts/Contacts";
@@ -15,12 +15,30 @@ export class App extends Component {
     ],
     filter: '',
   }
-  // добавление новых контактов к старым.
-  // handleAddContact = (newContact) =>
-  //   this.setState(({ contacts}) => ({
-  //     contacts: [...contacts, newContact]
+  componentDidMount() { 
+
+    const cntacts = localStorage.getItem('contacts',)
+const pars = JSON.parse(cntacts)
+    console.log(pars)
+    //если быд бы 0 все сломылось юы
+    if (pars) {
+     this.setState({contacts: pars}) 
+    }
     
-  //   }));
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('componentDidUpdate')
+    if (this.state.contacts !== prevState.contacts) {
+     console.log('newUpdate')
+   }
+    // console.log('prevState=перед обновлением',prevState)
+  //  console.log('prevProps=после обновления, актуальный стейт', this.state);
+    
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+  }
+
+
   addContacts = ({ name, number }) => {
     const showContacts = {name, number, id: nanoid(),}
     console.log(showContacts)
@@ -54,47 +72,27 @@ export class App extends Component {
     return contacts.filter(elem =>
       elem.name.toLowerCase().includes(filter),
     );
-    
-     //console.log('try', contact.name.includes(filter))
-       //.toLowerCase().includes(contact.filter)
-     //return f;//console.log(contact.filter)
   }
-//}
-    
-     
-      //   contacts.filter(elem =>
-      // elem.name.toLowerCase().includes(filter))
-// const filt = contacts.filter(contact => { contact.name.toLowerCase().includes(contact.filter)
-//       console.log(contact.filter)
-//       return filt;
-//      })
-  
-  //}
+
 render() {
   //const { contacts } = this.state;
   const { filter } = this.state;
   const addFilter = this.handleAddFilter() 
-  console.log('addFilter ',addFilter)
-  //console.log(filter)
     return (
-             <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 20,
-          backgroundColor: "yellow",
-          color: '#010101',
-        }}
-      >
-            <h1>Phonebook</h1>
-        <Form addContacts={this.addContacts} />
-        <h2>Contacts</h2> 
+             <Conteiner>
+        <h1 style={{
+          textAlign: 'center',
+          color: 'red',
+        bacgroundColor:'green',
+        }}>Phonebook</h1>
+        <Form  addContacts={this.addContacts} />
+        <h2 style={{
+          textAlign: 'center',
+          color: 'red',
+        }}>Contacts</h2> 
         <Filter filter={filter} onChange={this.HandleChangeFilterInput} />
-          <Contacts contacts={addFilter} onRemove={this.deliteContacts} />
-      </div>
+          <Contacts  contacts={addFilter} onRemove={this.deliteContacts} />
+      </Conteiner>
 
     )}
 }
